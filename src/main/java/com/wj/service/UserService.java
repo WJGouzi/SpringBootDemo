@@ -22,7 +22,7 @@ public interface UserService {
      * @return
      */
     public User queryUserInfoById(Integer id);
-
+    
     /**
      * 修改用户的余额
      * @param id
