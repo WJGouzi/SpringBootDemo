@@ -1,8 +1,10 @@
 package com.wj.controller;
 
 import com.wj.dto.ExamBean;
+import com.wj.dto.User;
 import com.wj.service.ExamService;
 import com.wj.service.impl.ExamServiceImpl;
+import com.wj.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,8 @@ public class ExamController {
 
     @Autowired
     private ExamServiceImpl examService;
+    @Autowired
+    private UserServiceImpl userService;
 
     @RequestMapping(value = "/exam/insert", method = RequestMethod.POST)
     public Map insertOneExamInfo(@RequestBody ExamBean examBean) {
@@ -54,6 +59,26 @@ public class ExamController {
             map.put("success", false);
             map.put("message", "查询失败!");
             map.put("info", null);
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/exam/newStudent", method = RequestMethod.POST)
+    public Map newStudentJoinExam(@RequestBody User user) {
+        HashMap<Object, Object> map = new HashMap<>();
+        ArrayList<User> users = userService.queryUserInfoByName(user.getName(), user.getId());
+        try {
+            for (User userBean : users) {
+                ExamBean examBean = new ExamBean();
+                examBean.setName(userBean.getName());
+                examService.insertExamInfo(examBean);
+            }
+            map.put("success", true);
+            map.put("message", "报名成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", "报名失败");
         }
         return map;
     }

@@ -2,6 +2,8 @@ package com.wj.service;
 
 import com.wj.dto.User;
 
+import java.util.ArrayList;
+
 /**
  * @Project : wangjun
  * @Package : com.wj.service
@@ -30,5 +32,11 @@ public interface UserService {
      * @return
      * */
     public int updateUserBalance(Integer id, Double balance);
+
+    /**
+     * 根据用户的姓名查询用户的信息
+     * @param name 用户的姓名
+     * */
+    public ArrayList<User> queryUserInfoByName(String name, Integer id);
 
 }
