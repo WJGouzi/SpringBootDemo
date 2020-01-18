@@ -1,17 +1,18 @@
 package com.wj.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wj.dto.ExamBean;
 import com.wj.dto.User;
-import com.wj.service.ExamService;
+import com.alibaba.fastjson.JSONObject;
 import com.wj.service.impl.ExamServiceImpl;
 import com.wj.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,31 @@ public class ExamController {
             e.printStackTrace();
             map.put("success", false);
             map.put("message", "报名失败");
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/exam/updateStudentScoreInfo", method = RequestMethod.POST)
+    public Map modifyStudentScoreInfo(HttpServletRequest req) {
+        HashMap<Object, Object> map = new HashMap<>();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+            StringBuffer sb = new StringBuffer();
+            String s = null;
+            while((s = br.readLine()) != null){
+                sb.append(s);
+            }
+            JSONObject jsonObject = JSONObject.parseObject(sb.toString());
+            String idCard = jsonObject.getString("idCard");
+            String score = jsonObject.getString("score");
+            ExamBean examBeanInfo = examService.queryExamInfoWithIdCard(idCard);
+            examService.updateExamScoreWithIdCard(examBeanInfo.getIdCard(), score);
+            map.put("success", true);
+            map.put("message", "成绩设置成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("success", false);
+            map.put("message", "成绩设置失败");
         }
         return map;
     }

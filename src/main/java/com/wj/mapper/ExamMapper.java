@@ -4,6 +4,7 @@ import com.wj.dto.ExamBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @Project : wangjun
@@ -15,4 +16,7 @@ import org.apache.ibatis.annotations.Select;
 public interface ExamMapper extends tk.mybatis.mapper.common.Mapper<ExamBean> {
     @Select("select * from exam where id_card = #{idCard} and test_card = #{testCard}")
     ExamBean findStudentExamInfo(@Param("idCard") String idCard, @Param("testCard") String testCard);
+
+    @Update("update exam set score = #{score} where id_card = #{idCard}")
+    int updateScoreInfo(@Param(("idCard")) String idCard, @Param("score") String score);
 }

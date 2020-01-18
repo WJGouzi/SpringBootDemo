@@ -38,4 +38,18 @@ public class ExamServiceImpl implements ExamService {
         return list.get(0);
     }
 
+    @Override
+    public ExamBean queryExamInfoWithIdCard(String idCard) {
+        Example example = new Example(ExamBean.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("idCard", idCard);
+        List<ExamBean> list = examMapper.selectByExample(example);
+        return list.get(0);
+    }
+
+    @Override
+    public int updateExamScoreWithIdCard(String idCard, String score) {
+        int res = examMapper.updateScoreInfo(idCard, score);
+        return res;
+    }
 }
