@@ -97,8 +97,7 @@ public class ExamController {
             JSONObject jsonObject = JSONObject.parseObject(sb.toString());
             String idCard = jsonObject.getString("idCard");
             String score = jsonObject.getString("score");
-            ExamBean examBeanInfo = examService.queryExamInfoWithIdCard(idCard);
-            examService.updateExamScoreWithIdCard(examBeanInfo.getIdCard(), score);
+            examService.updateExamScoreWithIdCard(idCard, score);
             map.put("success", true);
             map.put("message", "成绩设置成功");
         } catch (Exception e) {

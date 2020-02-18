@@ -18,5 +18,5 @@ public interface ExamMapper extends tk.mybatis.mapper.common.Mapper<ExamBean> {
     ExamBean findStudentExamInfo(@Param("idCard") String idCard, @Param("testCard") String testCard);
 
     @Update("update exam set score = #{score} where id_card = #{idCard}")
-    int updateScoreInfo(@Param(("idCard")) String idCard, @Param("score") String score);
+    int updateScoreInfo(@Param("idCard") String idCard, @Param("score") String score);
 }

@@ -16,7 +16,6 @@ import javax.persistence.Table;
 @Data
 @Table(name = "exam")
 public class ExamBean {
-
     @Id
     @KeySql(useGeneratedKeys = true)
     private Integer flowId;

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Author : Created By wangjun, Copyright © wangjun All Rights Reserved
  * @Date : 2020/1/13 22:13
  **/
+
 @SpringBootApplication
 public class WangjunApplication {
     public static void main(String[] args) {
